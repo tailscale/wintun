@@ -1161,7 +1161,7 @@ TunInitializeEx(
         .SymbolicName = &UnicodeSymbolicName,
         .MajorFunctions = DispatchTable,
         .ExtensionSize = sizeof(TUN_CTX),
-        .DefaultSDDLString = &SDDL_DEVOBJ_SYS_ALL /* Kernel, and SYSTEM: full control. Others: none */
+        .DefaultSDDLString = &SDDL_DEVOBJ_SYS_ALL_ADM_ALL /* Kernel, Admin, and SYSTEM: full control. Others: none */
     };
     NDIS_HANDLE DeviceObjectHandle;
     DEVICE_OBJECT *DeviceObject;
