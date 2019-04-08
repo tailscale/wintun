@@ -910,7 +910,7 @@ static NDIS_STATUS TunInitializeEx(NDIS_HANDLE MiniportAdapterHandle, NDIS_HANDL
 		.SymbolicName      = &unicode_symbolic_name,
 		.MajorFunctions    = dispatch_table,
 		.ExtensionSize     = sizeof(TUN_CTX),
-		.DefaultSDDLString = &SDDL_DEVOBJ_SYS_ALL /* Kernel, and SYSTEM: full control. Others: none */
+		.DefaultSDDLString = &SDDL_DEVOBJ_SYS_ALL_ADM_ALL /* Kernel, and SYSTEM: full control. Others: none */
 	};
 	NDIS_HANDLE handle;
 	DEVICE_OBJECT *object;
