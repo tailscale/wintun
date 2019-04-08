@@ -787,18 +787,27 @@ static NTSTATUS TunInitializeDispatchSecurityDescriptor(VOID)
     SID LocalSystem = { 0 };
     if (!NT_SUCCESS(Status = RtlInitializeSid(&LocalSystem, &NtAuthority, 1)))
         return Status;
-    LocalSystem.SubAuthority[0] = 18;
+    *RtlSubAuthoritySid(&LocalSystem, 0) = 18; // SECURITY_LOCAL_SYSTEM_RID
+
+    SID LocalAdmin = { 0 };
+    if (!NT_SUCCESS(Status = RtlInitializeSid(&LocalAdmin, &NtAuthority, 2)))
+        return Status;
+    *RtlSubAuthoritySid(&LocalAdmin, 0) = 32;  // "Administrators" group[0]
+    *RtlSubAuthoritySid(&LocalAdmin, 1) = 544; // "Administrators" group[1]
+
     struct
     {
         ACL Dacl;
-        ACCESS_ALLOWED_ACE AceFiller;
-        SID SidFiller;
+        ACCESS_ALLOWED_ACE AceFiller[2];
+        SID SidFiller[2];
     } DaclStorage = { 0 };
     if (!NT_SUCCESS(Status = RtlCreateAcl(&DaclStorage.Dacl, sizeof(DaclStorage), ACL_REVISION)))
         return Status;
     ACCESS_MASK AccessMask = GENERIC_ALL;
     RtlMapGenericMask(&AccessMask, IoGetFileObjectGenericMapping());
     if (!NT_SUCCESS(Status = RtlAddAccessAllowedAce(&DaclStorage.Dacl, ACL_REVISION, AccessMask, &LocalSystem)))
+        return Status;
+    if (!NT_SUCCESS(Status = RtlAddAccessAllowedAce(&DaclStorage.Dacl, ACL_REVISION, AccessMask, &LocalAdmin)))
         return Status;
     SECURITY_DESCRIPTOR SecurityDescriptor = { 0 };
     if (!NT_SUCCESS(Status = RtlCreateSecurityDescriptor(&SecurityDescriptor, SECURITY_DESCRIPTOR_REVISION)))
