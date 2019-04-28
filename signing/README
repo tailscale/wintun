@@ -1,0 +1,15 @@
+
+Build steps:
+
+1. Actually build the driver using Microsoft VC++ 2017.  You'll want both
+   the x86 and x64 versions.
+
+2. Sign it using the scripts in this directory.  Just run 'redo' from a WSL
+   prompt.
+
+3. Upload the resulting two *.signed.cab files to the Microsoft Partner
+   Center, for Attestation Signing:
+   https://partner.microsoft.com/en-us/dashboard/hardware/Search
+
+   (you'll need to log in as admin@tailscale.onmicrosoft.com, password
+   is in keybase)

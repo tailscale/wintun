@@ -1,0 +1,18 @@
+.OPTION EXPLICIT     ; Generate errors
+.Set CabinetFileCountThreshold=0
+.Set FolderFileCountThreshold=0
+.Set FolderSizeThreshold=0
+.Set MaxCabinetSize=0
+.Set MaxDiskFileCount=0
+.Set MaxDiskSize=0
+.Set CompressionType=MSZIP
+.Set Cabinet=on
+.Set Compress=on
+.Set DiskDirectory1=.
+.Set CabinetNameTemplate=tswintun64.cab.tmp
+
+.Set DestinationDir=tswintun-x64
+../amd64/Release/wintun.pdb
+../amd64/Release/wintun/wintun.sys
+../amd64/Release/wintun/wintun.inf
+../amd64/Release/wintun/wintun.cat
